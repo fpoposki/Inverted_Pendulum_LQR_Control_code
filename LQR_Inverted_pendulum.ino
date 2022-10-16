@@ -25,8 +25,7 @@ const float Kw  = 40;
 
 // Physical position limit
 const float POSITION_LIMIT = 0.4;
-// Controllable limits (experimentally determined)
-const float THETA_THRESHOLD = 3.14 / 10; 
+ 
 // Discrete control system implementation
 unsigned long time_now = 0L;
 unsigned long lastTimeMicros = 0L;
@@ -79,7 +78,7 @@ float getAngle(){
 }
 
 boolean isControllable(float theta_c) {
-  if ((theta_c >= 2.826) && (theta_c <= (3.454))){ //Implementation of deadzone when  pendulum angle is aproaching desired (to deal with noise from sensors)
+  if ((theta_c >= 2.826) && (theta_c <= (3.454))){ //Implementation of deadzone when  pendulum angle is aproaching desired (to deal with noise from sensors) experimentally determined
     if ((theta_c <= 3.10) || (theta_c >= (3.18))){
       control_status = true;
     }else{
