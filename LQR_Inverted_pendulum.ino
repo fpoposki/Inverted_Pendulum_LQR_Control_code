@@ -13,15 +13,15 @@ const int ConA = 10; //PWM speed control pin
 // System input (desired positions)
 const float x_desired = 0.15;
 const float v_desired = 0;
-const float t_desired = 3.14; // possibly needed to change to 0
+const float t_desired = 3.14; // 0 is vertical down position
 const float w_desired = 0;
 //Error values
 float x_error, v_error, t_error, w_error ;
 // LQR controller parameters
-const float Kx = 10;
-const float Kv = 7;
-const float Kth = 215.6;
-const float Kw  = 5;
+const float Kx = 51.8;
+const float Kv = 40.2;
+const float Kth = 159.2;
+const float Kw  = 40;
 
 // Physical position limit
 const float POSITION_LIMIT = 0.4;
@@ -79,7 +79,7 @@ float getAngle(){
 }
 
 boolean isControllable(float theta_c) {
-  if ((theta_c >= 2.826) && (theta_c <= (3.454))){
+  if ((theta_c >= 2.826) && (theta_c <= (3.454))){ //Implementation of deadzone when  pendulum angle is aproaching desired (to deal with noise from sensors)
     if ((theta_c <= 3.10) || (theta_c >= (3.18))){
       control_status = true;
     }else{
@@ -152,9 +152,9 @@ void loop() {
 
   last_x = x;
   last_theta = theta;
-  lastTimeMicros = time_now;
+  lastTimeMicros = time_now; //discrete control system implementation
 
-/**
+/** Serial print of key parameters to monitor (slows down operation)
   Serial.print(theta);
   Serial.print(" rad");
   Serial.print("\t");
